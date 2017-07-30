@@ -1,5 +1,11 @@
 SuperFashion::Application.routes.draw do
-  root to: 'home#index'
+	root to: 'home#index'
 
-  get '/about', to: 'home#about'
+	resources :contact, only: :index do
+		collection do
+			
+		end
+	end
+
+	get '/about', to: 'home#about'
 end
