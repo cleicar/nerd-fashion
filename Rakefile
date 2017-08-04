@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-SuperFashion::Application.load_tasks
+NerdFashion::Application.load_tasks

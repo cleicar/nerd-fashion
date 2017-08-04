@@ -1,11 +1,10 @@
-SuperFashion::Application.routes.draw do
-	root to: 'home#index'
+NerdFashion::Application.routes.draw do
+	
+	root to: 'pages#index'
 
-	resources :contact, only: :index do
-		collection do
-			
-		end
-	end
-
-	get '/about', to: 'home#about'
+	resources :pages, only: [:index]
+	
+  get "about"   => "pages#about",   as: :about
+  get "contact" => "pages#contact", as: :contact
+  get "pricing" => "pages#pricing", as: :pricing
 end

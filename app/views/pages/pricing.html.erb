@@ -1,0 +1,28 @@
+<h2 class="title">Nerd Fashion. <i style="font-size: 18px;">Veja as vantagens de ser um assinante!</i></h2>
+
+<div class="row pricing-block">
+  <% @pricing.each do |price| %>
+    <div class="col-md-3">
+      <div class="pricing hover-effect <%= price[:featured] ? 'pricing-active' : '' %>">
+        <div class="pricing-head">
+          <h3><%= price[:title] %><span><%= price[:headline] %></span></h3>
+          <h4><%= price[:price] %><span>Per Month </span></h4>
+        </div>
+        <ul class="pricing-content list-unstyled">
+          <% price[:details].each do |detail| %>
+            <li>
+              <%= detail %>
+            </li>
+          <% end %>
+        </ul>
+        <div class="pricing-footer">
+          <p>
+             <%= price[:footer] %>
+          </p>
+          <%= link_to "Contact Us", contact_path, class: 'btn yellow-crusta' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+</div>

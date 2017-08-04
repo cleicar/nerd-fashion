@@ -1,18 +1,11 @@
-// Place all the styles related to the Home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 .logo_login{ 
 	width: 100px; 
 }
 
 h2.title { 
-	background-image: url(title-background.jpg); 
+	background-color: #B9D5C2; 
 	padding: 5px; 
-}
-
-h3 { 
-	border-bottom: 2px solid #333333; 
+	margin-bottom: 50px;
 }
 
 figure.bordered { 

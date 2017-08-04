@@ -1,0 +1,36 @@
+<h2 class="title">Faça sua assinatura!</i></h2>
+
+<div class="page-title-wrapper text-center"><h3>Deixe seus dados que entraremos em contato</h3></div>
+
+<div class="col-md-8 col-md-offset-2" id="contact-form">
+  <div class="well well-sm">
+
+    <%= form_tag '/', class: "form-horizontal" do %>
+      <fieldset>
+        <!-- Name input-->
+        <div class="form-group">
+          <%= label_tag :name, 'Nome', class: "col-md-3 control-label" %>
+          <div class="col-md-9">
+            <%= text_field_tag :full_name, nil, placeholder: 'Seu Nome', class: "form-control"%>
+          </div>
+        </div>
+
+        <!-- Email input-->
+        <div class="form-group">
+          <%= label_tag :email, 'Email', class: "col-md-3 control-label" %>
+          <div class="col-md-9">
+            <%= text_field_tag 'email', nil, placeholder: 'Seu Email', class: "form-control"%>
+          </div>
+        </div>
+
+        <!-- Form actions -->
+        <div class="form-group">
+          <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+
+  </div>
+</div>

@@ -10,14 +10,10 @@
 		</div>
 		<div class="navbar-collapse collapse" id="navbar">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/">Início</a></li>
-				<li><a href="#about">Sobre</a></li>
-				<li><a href="#about">Preços</a></li>
-				<li><%= link_to "Contato", contact_index_path %></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="./">Meu Carrinho</span></a></li>
-				<li><a href="../navbar-fixed-top/">Sair</a></li>
+				<li class="active"><%= link_to "Início", root_path %></li>
+				<li><%= link_to "Sobre", about_path %></li>
+				<li><%= link_to "Preços", pricing_path %></li>
+				<li><%= link_to "Contato", contact_path %></li>
 			</ul>
 		</div>
 	</div>
