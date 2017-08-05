@@ -5,61 +5,51 @@
   $.fn.ready = function (fn) {
     var visitedPage = window.location.href
 
-    createCookie('client_id', "IOSD898SK214L", 1);
+    console.log(visitedPage);
 
-    $('#contact-form').submit(function(event) {
-      console.log($('#email').val());
+    saveTrack('visitad_pages', visitedPage);
 
-      $.ajax({
-        method: "POST",
-        url: "http://localhost:3001/api/contacts",
-        dataType: 'json',
-        headers: {
-          'Content-Type': 'application/json' ,
-          'X-Requested-With': 'XMLHttpRequest', 
-          'Access-Control-Allow-Origin': '*' ,
-          'Access-Control-Allow-Headers':'origin, content-type, accept, authorization'
-        },
-        data: { name: $('#name').val(), email: $('#email').val() }
-      }).done(function() {
-        console.log("Done!");
-      });
+    var user = getTrack('visitad_pages');
+    console.log(user);
 
-      event.preventDefault();
+    $('#contact-form').submit(function(e) {
+      sendUserInfoToSimpleCRM();
+      e.preventDefault();
     });
+
   }
 })(jQuery);
 
-function createCookie(name,value,days) {
-  var expires = "";
-  if (days) {
-    var date = new Date();
-    date.setTime(date.getTime() + (days*24*60*60*1000));
-    expires = "; expires=" + date.toUTCString();
+function saveTrack(name, value) {
+  window.localStorage.setItem(name, value);
+}
+
+function getTrack(name){
+  return window.localStorage.getItem(name);
+}
+
+function sendUserInfoToSimpleCRM() {  
+  var username = 'cleiviane';
+  var password = '12345678';
+  //var formData = $("#contact-form").serialize();
+
+  var contact = {
+    name:  $('#name').val(),
+    email: $('#email').val(),
+    created_at: 'Teste'
   }
 
-  document.cookie = name + "=" + value + expires + "; path=/";
-}
-
-function readCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(';');
-  for(var i=0;i < ca.length;i++) {
-    var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1,c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-  }
-  return null;
-}
-
-function eraseCookie(name) {
-  createCookie(name,"",-1);
-}
-
-function sendUserInfoToSimpleCRM(event) {
-  var values = {};
-  $.each($('#contact-form').serializeArray(), function(i, field) {
-    var t = values[field.name] = field.value;
-    console.log(t);
-  });
+  $.ajax({
+    method: "POST",
+    url: "http://localhost:3001/api/contacts",
+    crossDomain: true,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('Authorization', 'Basic ' + btoa(username + ":" + password));
+    },
+    data: JSON.stringify({contact})
+  }).done(function() {
+    console.log("Done!");
+  });  
 }
