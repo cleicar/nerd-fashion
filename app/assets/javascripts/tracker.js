@@ -2,15 +2,8 @@
 
   var ready = $.fn.ready;
   
-  $.fn.ready = function (fn) {
-    var visitedPage = window.location.href
-
-    console.log(visitedPage);
-
-    saveTrack('visitad_pages', visitedPage);
-
-    var user = getTrack('visitad_pages');
-    console.log(user);
+  $.fn.ready = function (fn) {   
+    addUserTrack();
 
     $('#contact-form').submit(function(e) {
       sendUserInfoToSimpleCRM();
@@ -20,11 +13,36 @@
   }
 })(jQuery);
 
-function saveTrack(name, value) {
-  window.localStorage.setItem(name, value);
+function addUserTrack(){
+  var visitedPage   = window.location.href;
+  var storageId     = 'visited_pages';
+  var storageValue  = [visitedPage];
+  var value         = null;
+
+  var savedTrack = getStorage(storageId);
+
+  if(savedTrack){
+    var pagesArray = savedTrack.split(',');
+
+    var exists = $.inArray(visitedPage, pagesArray);
+
+    if(exists == -1)
+      pagesArray.push(visitedPage)
+
+    storageValue = pagesArray;
+
+  }else{
+    storageValue = visitedPage
+  }
+
+  setStorage(storageId, storageValue);
 }
 
-function getTrack(name){
+function setStorage(name, value){
+  window.localStorage.setItem(name, value + ',');
+}
+
+function getStorage(name){
   return window.localStorage.getItem(name);
 }
 
@@ -36,7 +54,8 @@ function sendUserInfoToSimpleCRM() {
   var contact = {
     name:  $('#name').val(),
     email: $('#email').val(),
-    created_at: 'Teste'
+    created_at: new Date(),
+    pages: getStorage('visited_pages')
   }
 
   $.ajax({
@@ -50,6 +69,6 @@ function sendUserInfoToSimpleCRM() {
     },
     data: JSON.stringify({contact})
   }).done(function() {
-    console.log("Done!");
+    $("#result-message").show();
   });  
 }
